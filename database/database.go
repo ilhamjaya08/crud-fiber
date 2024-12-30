@@ -1,20 +1,29 @@
 package database
 
 import (
-	"fmt"
+	"log"
+	"os"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var DB *gorm.DB
 
 func Connect() {
-	db, err := gorm.Open(mysql.Open("root:@tcp(localhost:3306)/crud?parseTime=true"), &gorm.Config{})
-	if err != nil {
-		panic("Can't connect to database, error: " + err.Error())
-	}
-	DB = db
+	dsn := "root:@tcp(127.0.0.1:3306)/crud?charset=utf8mb4&parseTime=True&loc=Local"
+    db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+        Logger: logger.Default.LogMode(logger.Info),
+    })
 
-	fmt.Println("Connected to database")
+    if err != nil {
+        log.Fatal("Failed to connect to database. \n", err)
+        os.Exit(2)
+    }
+
+    log.Println("Connected Successfully to Database")
+    db.Logger = logger.Default.LogMode(logger.Info)
+    
+    DB = db
 }
