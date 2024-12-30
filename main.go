@@ -1,8 +1,9 @@
 package main
 
 import (
-	"crud/route"
 	"crud/database"
+	"crud/migrations"
+	"crud/route"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -10,6 +11,7 @@ import (
 
 func main() {
 	database.Connect()
+	migrations.Migrate()
 
 	app := fiber.New(fiber.Config{
 		AppName: "Crud Application",
