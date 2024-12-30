@@ -3,7 +3,7 @@ package main
 import (
 	"crud/database"
 	"crud/migrations"
-	"crud/route"
+	"crud/routes"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -19,7 +19,7 @@ func main() {
 
 	app.Use(logger.New())
 
-	route.SetupRoutes(app)
+	routes.SetupRoutes(app)
 
 	app.Listen(":3000")
 }
